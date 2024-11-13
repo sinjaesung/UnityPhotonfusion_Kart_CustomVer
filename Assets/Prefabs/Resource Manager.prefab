@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2531268566981355469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4039677654355881576}
+  - component: {fileID: 5695063930938892059}
+  m_Layer: 0
+  m_Name: Resource Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4039677654355881576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531268566981355469}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5695063930938892059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531268566981355469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299e48354521c524c86e37c4c7ae311c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudPrefab: {fileID: 4127089277876328363, guid: 57020117c4d9cf04386b00351a392b20, type: 3}
+  nicknameCanvasPrefab: {fileID: 6169474894481287046, guid: 53a8972d0c907cc4288177aa9da42e07, type: 3}
+  kartDefinitions:
+  - {fileID: 11400000, guid: 74a55470d26c4cd428f4a85bb0f2c66d, type: 2}
+  - {fileID: 11400000, guid: 92fab862faa4d1943b4d6fc680a4a228, type: 2}
+  - {fileID: 11400000, guid: fd82fe70dad8abc4bb0f0f50ade17512, type: 2}
+  gameTypes:
+  - {fileID: 11400000, guid: babfb5fcf6e0a4841a44f6c18c69a38f, type: 2}
+  - {fileID: 11400000, guid: f56b299a01d8142498f414ae31426c7b, type: 2}
+  tracks:
+  - {fileID: 11400000, guid: 6a188b7ed0cae634f9f4194804e5c360, type: 2}
+  - {fileID: 11400000, guid: 59fef4bc0a059cb40a9ca23e2c6952e6, type: 2}
+  powerups:
+  - {fileID: 11400000, guid: 7216acfa42854d147a24752b3946e506, type: 2}
+  - {fileID: 11400000, guid: a67c942f0f46cdd4394d82fd09e2b7d8, type: 2}
+  noPowerup: {fileID: 11400000, guid: 1ad2f5a488de68b45a413b2164d26ef6, type: 2}
