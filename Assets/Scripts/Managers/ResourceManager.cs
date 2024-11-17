@@ -1,3 +1,4 @@
+using Fusion;
 using FusionExamples.Utility;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class ResourceManager : MonoBehaviour
 	public TrackDefinition[] tracks;
 	public Powerup[] powerups;
 	public Powerup noPowerup;
+
+	public GameObject[] Characters;
 
 	public static ResourceManager Instance => Singleton<ResourceManager>.Instance;
 

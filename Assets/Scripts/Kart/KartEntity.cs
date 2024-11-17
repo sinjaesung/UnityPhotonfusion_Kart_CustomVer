@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection;
 using Fusion;
 using Fusion.Addons.Physics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class KartEntity : KartComponent
 {
@@ -12,8 +15,9 @@ public class KartEntity : KartComponent
 
     public event Action<int> OnHeldItemChanged;
     public event Action<int> OnCoinCountChanged;
-    
-	public KartAnimator Animator { get; private set; }
+    public event Action<int> OnCharIdChanged;
+
+    public KartAnimator Animator { get; private set; }
 	public KartCamera Camera { get; private set; }
 	public KartController Controller { get; private set; }
 	public KartInput Input { get; private set; }
@@ -33,12 +37,19 @@ public class KartEntity : KartComponent
 
 	[Networked]
 	public int CoinCount { get; set; }
+	[Networked]
+	public int CharacterIndex { get; set; } = -1;
 
-	public Transform itemDropNode;
+
+    public Transform itemDropNode;
 
     private bool _despawned;
     
     private ChangeDetector _changeDetector;
+
+	public Transform CharacterSpawnPoint;
+
+	public GameObject[] Characters;
 
 	private static void OnHeldItemIndexChangedCallback(KartEntity changed)
 	{
@@ -55,8 +66,16 @@ public class KartEntity : KartComponent
 	{
 		changed.OnCoinCountChanged?.Invoke(changed.CoinCount);
 	}
-
-	private void Awake()
+    private static void OnCharIdChangedCallback(KartEntity changed)
+    {
+		Debug.Log("KartEntity OnCharIdChangedCallback>>" + changed.CharacterIndex);
+        changed.OnCharIdChanged?.Invoke(changed.CharacterIndex);
+    }
+    public void SetCharacterIndex(int _index)
+    {
+        CharacterIndex = _index;
+    }
+    private void Awake()
 	{
 		// Set references before initializing all components
 		Animator = GetComponentInChildren<KartAnimator>();
@@ -77,6 +96,7 @@ public class KartEntity : KartComponent
 
 	public override void Spawned()
 	{
+		Debug.Log("KartEntity Spawned>>");
 		base.Spawned();
 		
 		_changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
@@ -92,11 +112,15 @@ public class KartEntity : KartComponent
 
 		Karts.Add(this);
 		OnKartSpawned?.Invoke(this);
-	}
+
+		Debug.Log("KartEntity Spawned");
+    }
 	
 	public override void Render()
 	{
-		foreach (var change in _changeDetector.DetectChanges(this))
+		//Debug.Log("KartEntity Render>>"+CharacterIndex);
+        CharacterSpawn();
+        foreach (var change in _changeDetector.DetectChanges(this))
 		{
 			switch (change)
 			{
@@ -106,11 +130,34 @@ public class KartEntity : KartComponent
 				case nameof(CoinCount):
 					OnCoinCountChangedCallback(this);
 					break;
-			}
+                case nameof(CharacterIndex):
+				{
+					OnCharIdChangedCallback(this);
+						//CharacterSpawn();
+                    break;
+                }
+            }
 		}
 	}
+	public void CharacterSpawn()
+	{
 
-	public override void Despawned(NetworkRunner runner, bool hasState)
+        //GameObject characterObj = ResourceManager.Instance.Characters[random_index];
+        //Debug.Log("KartEntity characterObj:" + characterObj.transform.name);
+
+        //var characterClone = Instantiate(characterObj);
+        //var characterClone = runner.Spawn(characterObj, point.position, point.rotation, player.Object.InputAuthority);
+        //NetworkObject characterClone = Runner.Spawn(characterObj, transform.position, transform.rotation);
+      
+        // NetworkObject characterClone = NetworkObject.Instantiate(characterObj, transform.position, transform.rotation);
+        //Debug.Log("KartEntity CharacterSpawn SpawnPlayer>> characterClone:" + CharacterIndex);
+
+		var characterObj = Characters[CharacterIndex];
+        //Debug.Log("KartEntity CharacterSpawn SpawnPlayer>> characterObj:" + characterObj.transform.name);
+		characterObj.SetActive(true);
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
 	{
 		base.Despawned(runner, hasState);
 		Karts.Remove(this);

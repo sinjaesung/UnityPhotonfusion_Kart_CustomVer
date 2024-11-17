@@ -23,8 +23,17 @@ public class KartSelectUI : MonoBehaviour
             RoomPlayer.Local.RPC_SetKartId(kartIndex);
         }
 	}
+	public void SelectChar(int charIndex)
+	{
+        ClientInfo.CharId = charIndex;
 
-	private void ApplyStats()
+        if (RoomPlayer.Local != null)
+        {
+            RoomPlayer.Local.RPC_SetCharId(charIndex);
+        }
+    }
+
+    private void ApplyStats()
 	{
 		KartDefinition def = ResourceManager.Instance.kartDefinitions[ClientInfo.KartId];
 		speedStatBar.fillAmount = def.SpeedStat;

@@ -65,10 +65,13 @@ public class Track : NetworkBehaviour, ICameraController
 		var point = spawnpoints[index];
 
 		var prefabId = player.KartId;
-		var prefab = ResourceManager.Instance.kartDefinitions[prefabId].prefab;
+        var charId = player.CharId;
 
-		// Spawn player
-		var entity = runner.Spawn(
+		Debug.Log("Track SpawnPlayer>> charId:" + charId);
+		var prefab = ResourceManager.Instance.kartDefinitions[prefabId].prefab;
+        
+        // Spawn player
+        var entity = runner.Spawn(
 			prefab,
 			point.position,
 			point.rotation,
@@ -79,7 +82,13 @@ public class Track : NetworkBehaviour, ICameraController
 		player.GameState = RoomPlayer.EGameState.GameCutscene;
 		player.Kart = entity.Controller;
 
-		Debug.Log($"Spawning kart for {player.Username} as {entity.name}");
+		entity.SetCharacterIndex(charId);
+        entity.OnCharIdChanged += index =>
+        {
+            Debug.Log(">>KartEntity OnCharIdChanged>>" + index);
+        };
+
+        Debug.Log($"Spawning kart for {player.Username} as {entity.name}");
 		entity.transform.name = $"Kart ({player.Username})";
 	}
 

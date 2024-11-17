@@ -119,11 +119,15 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 	{
 		if (runner.TryGetSceneInfo(out var scene) && scene.SceneCount > 0)
 		{
+			Debug.Log("GameLauncher OnConnectRequest scene.SceneCount > 0");
 			Debug.LogWarning($"Refused connection requested by {request.RemoteAddress}");
 			request.Refuse();
 		}
 		else
-			request.Accept();
+		{
+            Debug.Log("GameLauncher new OnConnectRequest empty scene");
+            request.Accept();
+		}
 	}
 	public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
 	{

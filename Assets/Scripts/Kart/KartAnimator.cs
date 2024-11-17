@@ -124,17 +124,20 @@ public class KartAnimator : KartComponent
 		SetTrigger("Boost");
 
 		Color color = Controller.driftTiers[index].color;
+		Debug.Log("UpdateBoostState>>" + color);
 		foreach (var emitter in boostEmitters)
 		{
-			var main = emitter.main;
+            Debug.Log("UpdateBoostState boostEmitters>>" + emitter.name);
+            var main = emitter.main;
 			main.startColor = color;
 			foreach (var subEmitter in emitter.GetComponentsInChildren<ParticleSystem>())
 			{
 				var sub = subEmitter.main;
 				sub.startColor = color;
-			}
+                Debug.Log("UpdateBoostState subEmitter>>" + subEmitter.name);
+            }
 
-			emitter.Play(true);
+            emitter.Play(true);
 		}
 		
 		if (Object.HasInputAuthority)

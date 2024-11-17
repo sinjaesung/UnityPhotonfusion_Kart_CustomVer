@@ -173,21 +173,21 @@ public class GameUI : MonoBehaviour
 		var driftIndex = KartController.DriftTierIndex;
 		var boostIndex = KartController.BoostTierIndex;
 
-		if (KartController.IsDrifting)
-		{
-			if (driftIndex < KartController.driftTiers.Length - 1)
-				SetBoostBar((KartController.DriftTime - KartController.driftTiers[driftIndex].startTime) /
-				            (KartController.driftTiers[driftIndex + 1].startTime - KartController.driftTiers[driftIndex].startTime));
-			else
-				SetBoostBar(1);
-		}
-		else
-		{
-			SetBoostBar(boostIndex == -1
-				? 0f
-				: KartController.BoostTime / KartController.driftTiers[boostIndex].boostDuration);
-		}
-	}
+        if (KartController.IsDrifting)
+        {
+            if (driftIndex < KartController.driftTiers.Length - 1)
+                SetBoostBar((KartController.DriftTime - KartController.driftTiers[driftIndex].startTime) /
+                            (KartController.driftTiers[driftIndex + 1].startTime - KartController.driftTiers[driftIndex].startTime));
+            else
+                SetBoostBar(1);
+        }
+        else
+        {
+            SetBoostBar(boostIndex == -1
+                ? 0f
+                : KartController.BoostTime / KartController.driftTiers[boostIndex].boostDuration);
+        }
+    }
 
 	private void UpdateLapTimes()
 	{

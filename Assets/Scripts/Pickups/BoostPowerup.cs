@@ -5,7 +5,8 @@ using UnityEngine;
 public class BoostPowerup : SpawnedPowerup {
     public override void Init(KartEntity spawner) {
         base.Init(spawner);
-        
+
+        Debug.Log("BoostPowerUp Init>>" + spawner.name);
         spawner.Controller.GiveBoost(false, 2);
         
         // Runner.Despawn(Object, true);

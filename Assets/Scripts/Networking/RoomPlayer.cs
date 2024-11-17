@@ -27,8 +27,8 @@ public class RoomPlayer : NetworkBehaviour
 	[Networked] public KartController Kart { get; set; }
 	[Networked] public EGameState GameState { get; set; }
 	[Networked] public int KartId { get; set; }
-
-	public bool IsLeader => Object!=null && Object.IsValid && Object.HasStateAuthority;
+    [Networked] public int CharId { get; set; }
+    public bool IsLeader => Object!=null && Object.IsValid && Object.HasStateAuthority;
 	
 	private ChangeDetector _changeDetector;
 
@@ -79,7 +79,12 @@ public class RoomPlayer : NetworkBehaviour
 		KartId = id;
 	}
 
-	[Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
+    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
+    public void RPC_SetCharId(int id)
+    {
+        CharId = id;
+    }
+    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
 	public void RPC_ChangeReadyState(NetworkBool state)
 	{
 		Debug.Log($"Setting {Object.Name} ready state to {state}");

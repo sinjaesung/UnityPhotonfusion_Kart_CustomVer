@@ -23,6 +23,7 @@ public class KartItemController : KartComponent {
             
             Kart.Audio.PlayHorn();
         } else {
+            Debug.Log("KartItemController UseItem" + Kart.HeldItem.itemName);
             Kart.HeldItem.Use(Runner, Kart);
             Kart.HeldItemIndex = -1;
         }
