@@ -92,11 +92,11 @@ public class KartEntity : KartComponent
 		foreach (var component in components) component.Init(this);
 	}
 
+	//공유한다>>그 개체의값은 KartEntity생성시마다 초기화되지않고 값 유지공유
 	public static readonly List<KartEntity> Karts = new List<KartEntity>();
 
 	public override void Spawned()
 	{
-		Debug.Log("KartEntity Spawned>>");
 		base.Spawned();
 		
 		_changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
@@ -110,10 +110,11 @@ public class KartEntity : KartComponent
 			Instantiate(ResourceManager.Instance.nicknameCanvasPrefab);
 		}
 
+		Debug.Log("KartEntity Spawned Karts Add");
+
 		Karts.Add(this);
 		OnKartSpawned?.Invoke(this);
 
-		Debug.Log("KartEntity Spawned");
     }
 	
 	public override void Render()

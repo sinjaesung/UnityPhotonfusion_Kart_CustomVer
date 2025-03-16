@@ -23,9 +23,13 @@ public class NicknameUI : MonoBehaviour
 
     private void EnsureAllTexts() {
         // we need to make sure that any karts that spawned before the callback was subscribed, are registered
+        Debug.Log("NickNameUI EnsureAllTexts()");
         var karts = KartEntity.Karts;
+        int k =0;
         foreach ( var kart in karts.Where(kart => !_kartNicknames.ContainsKey(kart)) ) {
-            SpawnNicknameText(kart); 
+            Debug.Log("NickNameUI EnsureAllTexts>> "+k + "| " + kart.transform.name);
+            SpawnNicknameText(kart);
+            k++;
         }
     }
 

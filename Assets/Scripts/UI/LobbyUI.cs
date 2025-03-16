@@ -46,6 +46,7 @@ public class LobbyUI : MonoBehaviour, IDisabledUI
 
 	void UpdateDetails(GameManager manager)
 	{
+		Debug.Log("LobbyUI UpdateDetails>>");
 		lobbyNameText.text = "Room Code: " + manager.LobbyName;
 		trackNameText.text = manager.TrackName;
 		modeNameText.text = manager.ModeName;
@@ -79,6 +80,8 @@ public class LobbyUI : MonoBehaviour, IDisabledUI
 		readyUp.onClick.AddListener(ReadyUpListener);
 
 		IsSubscribed = true;
+
+		Debug.Log("LobbyUI Setup>>");
 	}
 
 	private void OnDestroy()
@@ -107,6 +110,7 @@ public class LobbyUI : MonoBehaviour, IDisabledUI
 		obj.SetPlayer(player);
 
 		ListItems.Add(player, obj);
+		Debug.Log("LobbyUI PlayerAdded AddPlayer>>" + player.KartId);
 		
 		UpdateDetails(GameManager.Instance);
 	}
@@ -120,7 +124,8 @@ public class LobbyUI : MonoBehaviour, IDisabledUI
 		if (obj != null)
 		{
 			Destroy(obj.gameObject);
-			ListItems.Remove(player);
+            Debug.Log("LobbyUI RemovePlayer>>");
+            ListItems.Remove(player);
 		}
 	}
 
@@ -133,6 +138,7 @@ public class LobbyUI : MonoBehaviour, IDisabledUI
 		var local = RoomPlayer.Local;
         if (local && local.Object && local.Object.IsValid)
         {
+			Debug.Log("LobbyUI ReadyUpListener LocalPlayer ReadyUp>>" + local.transform.name);
             local.RPC_ChangeReadyState(!local.IsReady);
         }
 	}
@@ -145,6 +151,8 @@ public class LobbyUI : MonoBehaviour, IDisabledUI
 		if (IsAllReady())
 		{
 			int scene = ResourceManager.Instance.tracks[GameManager.Instance.TrackId].buildIndex;
+
+			Debug.Log("LobbyUI IsAllReady()>> LevelManager.LoadTrack:" + scene);
 			LevelManager.LoadTrack(scene);
 		}
 	}

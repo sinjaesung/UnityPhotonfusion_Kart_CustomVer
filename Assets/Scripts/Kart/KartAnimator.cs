@@ -79,6 +79,7 @@ public class KartAnimator : KartComponent
 		}
 
 		var color = Controller.driftTiers[index].color;
+		Debug.Log("KartAnimator UpdateDriftState index>>" + index);
 		foreach (var emitter in driftEmitters)
 		{
 			var main = emitter.main;
@@ -86,15 +87,18 @@ public class KartAnimator : KartComponent
 			foreach (var subEmitter in emitter.GetComponentsInChildren<ParticleSystem>())
 			{
 				var sub = subEmitter.main;
-				sub.startColor = color;
+                Debug.Log("UpdateDriftState subEmitter driftEmitters>>" + subEmitter.name);
+                sub.startColor = color;
 			}
 
+			Debug.Log("UpdateDriftState driftEmitters>>" + emitter.name);
 			emitter.Play(true);
 		}
 
 		foreach (var emitter in tireSmokeEmitters)
 		{
-			emitter.Play(true);
+            Debug.Log("UpdateDriftState tireSmokeEmitters>>" + emitter.name);
+            emitter.Play(true);
 		}
 	}
 
@@ -124,7 +128,7 @@ public class KartAnimator : KartComponent
 		SetTrigger("Boost");
 
 		Color color = Controller.driftTiers[index].color;
-		Debug.Log("UpdateBoostState>>" + color);
+		Debug.Log("UpdateBoostState boostTierIndex>>" + index+">"+color);
 		foreach (var emitter in boostEmitters)
 		{
             Debug.Log("UpdateBoostState boostEmitters>>" + emitter.name);

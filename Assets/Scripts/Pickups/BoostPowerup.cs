@@ -7,7 +7,7 @@ public class BoostPowerup : SpawnedPowerup {
         base.Init(spawner);
 
         Debug.Log("BoostPowerUp Init>>" + spawner.name);
-        spawner.Controller.GiveBoost(false, 2);
+        spawner.Controller.GiveBoost(false, 4);
         
         // Runner.Despawn(Object, true);
         // Destroy(gameObject);

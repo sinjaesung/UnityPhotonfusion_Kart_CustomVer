@@ -30,7 +30,7 @@ namespace Managers
 
 		protected override IEnumerator LoadSceneCoroutine(SceneRef sceneRef, NetworkLoadSceneParameters sceneParams)
 		{
-			Debug.Log($"Loading scene {sceneRef}");
+			Debug.Log($"LevelManager LoadSceneCoroutine Loading scene {sceneRef}");
 
 			PreLoadScene(sceneRef.AsIndex);
 			
@@ -42,12 +42,16 @@ namespace Managers
 			// Now we can safely spawn karts
 			if (GameManager.CurrentTrack != null && sceneRef.AsIndex > LOBBY_SCENE)
 			{
+				Debug.Log("LevelManager LoadSceneCoroutine>> Runner.GameMode>>" + Runner.GameMode);
 				if (Runner.GameMode == GameMode.Host)
 				{
+					int d = 0;
 					foreach (var player in RoomPlayer.Players)
 					{
+						Debug.Log("LevelManager Spawn Players>>" + d + "| " + player.transform.name);
 						player.GameState = RoomPlayer.EGameState.GameCutscene;
 						GameManager.CurrentTrack.SpawnPlayer(Runner, player);
+						d++;
 					}
 				}
 			}
@@ -60,7 +64,7 @@ namespace Managers
 			if (scene > LOBBY_SCENE)
 			{
 				// Show an empty dummy UI screen - this will stay on during the game so that the game has a place in the navigation stack. Without this, Back() will break
-				Debug.Log("Showing Dummy");
+				Debug.Log("PreLoadScene Showing Dummy LoadingScreen");
 				UIScreen.Focus(_dummyScreen);
 			}
 			else if(scene==LOBBY_SCENE)
@@ -69,11 +73,13 @@ namespace Managers
 				{
 					player.IsReady = false;
 				}
+				Debug.Log("PreLoadScene Load LobbyScene>>");
 				UIScreen.activeScreen.BackTo(_lobbyScreen);
 			}
 			else
 			{
-				UIScreen.BackToInitial();
+                Debug.Log("PreLoadScene BackToInitial>>");
+                UIScreen.BackToInitial();
 			}
 			fader.gameObject.SetActive(true);
 			fader.FadeIn();

@@ -58,7 +58,16 @@ public class UIScreen : MonoBehaviour
 
 	public void BackTo(UIScreen screen)
 	{
-		while (activeScreen!=null && activeScreen.previousScreen!=null && activeScreen != screen)
+		if (screen == null)
+		{
+			Debug.Log("UIScreen Session Disconnected screen null>>");
+		}
+		int c = 0;
+		while (activeScreen != null && activeScreen.previousScreen != null && activeScreen != screen)
+		{
+			//Debug.Log("UIScreen BackTo |" + c + "|now screen:" + activeScreen.transform.name + ">previousScreen:" + activeScreen.previousScreen.transform.name+"with screen compare"+screen.transform.name);
 			activeScreen.Back();
+			c++;
+		}
 	}
 }

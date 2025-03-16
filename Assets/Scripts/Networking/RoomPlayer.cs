@@ -13,8 +13,9 @@ public class RoomPlayer : NetworkBehaviour
 		GameReady
 	}
 
+	//공유한다>>그 개체의값은 RoomPlayer생성시마다 초기화되지않고 값 유지공유
 	public static readonly List<RoomPlayer> Players = new List<RoomPlayer>();
-
+	
 	public static Action<RoomPlayer> PlayerJoined;
 	public static Action<RoomPlayer> PlayerLeft;
 	public static Action<RoomPlayer> PlayerChanged;
@@ -47,6 +48,7 @@ public class RoomPlayer : NetworkBehaviour
 		}
 
 		Players.Add(this);
+		Debug.Log("RoomPlayer Spawned PlayersAdd playersCount:" + Players.Count);
 		PlayerJoined?.Invoke(this);
 
 		DontDestroyOnLoad(gameObject);
@@ -69,6 +71,7 @@ public class RoomPlayer : NetworkBehaviour
 	[Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
 	private void RPC_SetPlayerStats(NetworkString<_32> username, int kartId)
 	{
+		Debug.Log("RoomPlayer Rpc_SetPlayerStats>>" + username + "," + kartId);
 		Username = username;
 		KartId = kartId;
 	}
@@ -76,12 +79,14 @@ public class RoomPlayer : NetworkBehaviour
 	[Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
 	public void RPC_SetKartId(int id)
 	{
-		KartId = id;
+        Debug.Log("RoomPlayer RPC_SetKartId>>" + id);
+        KartId = id;
 	}
 
     [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
     public void RPC_SetCharId(int id)
     {
+        Debug.Log("RoomPlayer RPC_SetCharId>>" + id);
         CharId = id;
     }
     [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]

@@ -18,6 +18,7 @@ public class SpotlightGroup : MonoBehaviour
 
 	private void OnEnable()
 	{
+		Debug.Log("SpotlightGroup OnEnable>>");
 		if (string.IsNullOrEmpty(searchName) == false)
 		{
 			spotlights.Add(searchName, this);
@@ -26,7 +27,8 @@ public class SpotlightGroup : MonoBehaviour
 
 	private void OnDisable()
 	{
-		if (string.IsNullOrEmpty(searchName) == false)
+        Debug.Log("SpotlightGroup OnDisable>>");
+        if (string.IsNullOrEmpty(searchName) == false)
 		{
 			spotlights.Remove(searchName);
 		}
@@ -34,7 +36,8 @@ public class SpotlightGroup : MonoBehaviour
 
 	private void Awake()
 	{
-		objects.ForEach((obj) => obj.SetActive(false));
+        Debug.Log("SpotlightGroup Awake>>");
+        objects.ForEach((obj) => obj.SetActive(false));
 		if (defaultIndex != -1)
 		{
 			FocusIndex(defaultIndex);
@@ -43,6 +46,7 @@ public class SpotlightGroup : MonoBehaviour
 
 	public void FocusIndex(int index)
 	{
+		Debug.Log("SpotlightGroup FocusIndex>>" + index);
 		if (focused) focused.SetActive(false);
 		focused = objects[index];
 		focused.SetActive(true);

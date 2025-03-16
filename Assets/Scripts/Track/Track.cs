@@ -112,6 +112,9 @@ public class Track : NetworkBehaviour, ICameraController
 			introTracks[_currentIntroTrack].endPoint.rotation,
 			_introIntervalProgress);
 
+		Debug.Log(_currentIntroTrack + "| Track ControlCamera>>" + introTracks[_currentIntroTrack].startPoint.position+"~"+introTracks[_currentIntroTrack].endPoint.position);
+		Debug.Log(_currentIntroTrack + "| Track ControlCamera>>" + introTracks[_currentIntroTrack].startPoint.rotation + "~" + introTracks[_currentIntroTrack].endPoint.rotation);
+
 		_introIntervalProgress += Time.deltaTime * introSpeed;
 		if (_introIntervalProgress > 1)
 		{
@@ -121,9 +124,11 @@ public class Track : NetworkBehaviour, ICameraController
 			{
 				_currentIntroTrack = 0;
 				_introIntervalProgress = 0;
-				return false;
+                Debug.Log("Track ControlCamera>> currentIntroTrack last>>" + _currentIntroTrack);
+                return false;
 			}
 		}
+		Debug.Log("Track ControlCamera>> cam pos,rot>>" + cam.transform.position + "," + cam.transform.rotation);
 
 		return true;
 	}

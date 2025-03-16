@@ -58,6 +58,7 @@ public class EndRaceUI : MonoBehaviour, GameUI.IGameUIComponent, IDisabledUI
 
     private void EnsureContinueButton(List<KartEntity> karts)
 	{
+		Debug.Log("EndRaceUI>> karts status" + karts.Count + "," + KartEntity.Karts.Count);
         var allFinished = karts.Count == KartEntity.Karts.Count;
 		if (RoomPlayer.Local.IsLeader) {
             continueEndButton.gameObject.SetActive(allFinished);

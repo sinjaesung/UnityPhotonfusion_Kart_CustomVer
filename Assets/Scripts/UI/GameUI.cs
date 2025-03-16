@@ -175,19 +175,28 @@ public class GameUI : MonoBehaviour
 
         if (KartController.IsDrifting)
         {
-            if (driftIndex < KartController.driftTiers.Length - 1)
-                SetBoostBar((KartController.DriftTime - KartController.driftTiers[driftIndex].startTime) /
-                            (KartController.driftTiers[driftIndex + 1].startTime - KartController.driftTiers[driftIndex].startTime));
-            else
-                SetBoostBar(1);
-        }
+			if (driftIndex < KartController.driftTiers.Length - 1)
+			{
+				SetBoostBar((KartController.DriftTime - KartController.driftTiers[driftIndex].startTime) /
+							(KartController.driftTiers[driftIndex + 1].startTime - KartController.driftTiers[driftIndex].startTime));
+				Debug.Log("Drifting GameUI UpdateBoostBar driftIndex < KartController.driftTiers.Length-1" + driftIndex + "<" + (KartController.driftTiers.Length - 1));
+			}
+			else
+			{
+				SetBoostBar(1);
+				Debug.Log("Drifting GameUI UpdateBoostBar driftIndex >= KartController.driftTiers.Length-1" + driftIndex + ">=" + (KartController.driftTiers.Length - 1));
+			}
+		}
         else
         {
             SetBoostBar(boostIndex == -1
                 ? 0f
                 : KartController.BoostTime / KartController.driftTiers[boostIndex].boostDuration);
-        }
-    }
+
+			Debug.Log("Not Drifting GameUI KartController.BoostTime / KartController.driftTiers[boostIndex].boostDuration" + KartController.BoostTime + 
+				"/" + (KartController.driftTiers[boostIndex].boostDuration));
+		}
+	}
 
 	private void UpdateLapTimes()
 	{
@@ -209,9 +218,12 @@ public class GameUI : MonoBehaviour
 					: lapTimes.Get(i - 1);
 
 				var deltaTicks = lapTicks - previousTicks;
+				Debug.Log(i + "| lapTicks - PreviousTicks " + lapTicks+"-"+previousTicks);
+
 				var time = TickHelper.TickToSeconds(Kart.Runner, deltaTicks);
 
 				SetLapTimeText(time, i);
+				Debug.Log(i + "| SetLapTimeText" + time);
 			}
 		}
 
@@ -235,6 +247,7 @@ public class GameUI : MonoBehaviour
 
 	private void SetLapCount(int lap, int maxLaps)
 	{
+		Debug.Log("GameUI SetLapCount>>" + lap + "/" + maxLaps);
 		var text = $"{(lap > maxLaps ? maxLaps : lap)}/{maxLaps}";
 		lapCount.text = text;
 	}

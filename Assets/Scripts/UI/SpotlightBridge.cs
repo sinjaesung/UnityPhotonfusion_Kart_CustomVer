@@ -14,6 +14,7 @@ public class SpotlightBridge : MonoBehaviour
 			return;
 		}
 
+		Debug.Log("SpotlightBridge focusIndex>>"+ target+">index:" + index);
 		if (SpotlightGroup.Search(target, out SpotlightGroup spotlight))
 			spotlight.FocusIndex(index);
 	}

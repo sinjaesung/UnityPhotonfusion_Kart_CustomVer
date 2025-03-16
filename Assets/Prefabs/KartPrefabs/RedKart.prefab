@@ -319,21 +319,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collider: {fileID: 1318307956455632077}
   driftTiers:
-  - color: {r: 0.54901963, g: 0.6901961, b: 0.67058825, a: 0}
+  - color: {r: 0.54901963, g: 0.6901961, b: 0.67058825, a: 1}
     boostDuration: 0
     startTime: 0
-  - color: {r: 0.09019608, g: 0.2784314, b: 1, a: 0}
+  - color: {r: 0.09019608, g: 0.2784314, b: 1, a: 1}
     boostDuration: 0.75
-    startTime: 1.5
-  - color: {r: 1, g: 0.49019608, b: 0.07058824, a: 0}
+    startTime: 0.3
+  - color: {r: 1, g: 0.49019608, b: 0.07058824, a: 1}
     boostDuration: 1.5
-    startTime: 4
-  - color: {r: 1, g: 0.21176471, b: 0.7764706, a: 0}
+    startTime: 0.6
+  - color: {r: 1, g: 0.21176471, b: 0.7764706, a: 1}
     boostDuration: 2.5
-    startTime: 7
-  - color: {r: 1, g: 0.84313726, b: 0.14509805, a: 0}
+    startTime: 0.8
+  - color: {r: 1, g: 0.84313726, b: 0.14509805, a: 1}
     boostDuration: 3.75
-    startTime: 11
+    startTime: 1
   tireYawAxis: 2
   model: {fileID: 5823633489273070897}
   tireFL: {fileID: 4402486823102975402}
@@ -1405,6 +1405,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7499924715855964636, guid: a15adda0447bde14d95a3b3564c4c1d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8917477677665003563, guid: a15adda0447bde14d95a3b3564c4c1d9, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.45
@@ -1916,6 +1920,10 @@ PrefabInstance:
     - target: {fileID: 7499924715855964636, guid: a15adda0447bde14d95a3b3564c4c1d9, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499924715855964636, guid: a15adda0447bde14d95a3b3564c4c1d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8917477677665003563, guid: a15adda0447bde14d95a3b3564c4c1d9, type: 3}
       propertyPath: m_LocalScale.x

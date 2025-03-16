@@ -39,6 +39,7 @@ public class Coin : NetworkBehaviour, ICollidable {
             IsActive = false;
             
             if ( kart.Object.HasStateAuthority ) {
+                Debug.Log("Coin Collide Destroy HasStateAuthority>>");
                 Runner.Despawn(Object);
             }
         }

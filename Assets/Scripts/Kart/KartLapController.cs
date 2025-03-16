@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics;
 using Fusion;
 using Fusion.Addons.Physics;
+using UnityEngine;
 
 public class KartLapController : KartComponent {
 
@@ -140,11 +142,12 @@ public class KartLapController : KartComponent {
             CheckpointIndex = checkpoint.index;
             return;
         }
-
+        UnityEngine.Debug.Log("ProcessCheckPoint Updates before" + CheckpointIndex);
         // if current checkpoint is the one directly after the previous checkpoints
         if ( CheckpointIndex == checkpoint.index - 1 ) {
             CheckpointIndex++;
         }
+        UnityEngine.Debug.Log("ProcessCheckPoint Updates after" + CheckpointIndex);
     }
 
     public void ProcessFinishLine(FinishLine finishLine) {
@@ -162,6 +165,7 @@ public class KartLapController : KartComponent {
             return;
         }
 
+        UnityEngine.Debug.Log("ProcessFinishLine CheckpointIndex update before>>" + CheckpointIndex);
         // Iff we are on the last checkpoint, proceed to 'complete' a lap. (Or if we are in debug)
         if ( CheckpointIndex == checkpoints.Length - 1 || finishLine.debug ) {
             // If we have just started the race we dont want to complete a lap. This is a small workaround.
@@ -175,6 +179,7 @@ public class KartLapController : KartComponent {
             Lap++;
             CheckpointIndex = -1;
         }
+        UnityEngine.Debug.Log("ProcessFinishLine CheckpointIndex update after>>" + CheckpointIndex);
     }
 
     /// <summary>

@@ -42,6 +42,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 		DontDestroyOnLoad(gameObject);
 
 		SceneManager.LoadScene(LevelManager.LOBBY_SCENE);
+		Debug.Log("GameLauncher levelManager Start설정 및 로비씬이동 이 오브젝트(MainCanvas하 모든존재)가 DontDestroyOnLoad한채로 로비씬 이동>>>");
 	}
 
 	public void SetCreateLobby() => _gameMode = GameMode.Host;
@@ -67,6 +68,14 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 		_pool = go.AddComponent<FusionObjectPoolRoot>();
 
 		Debug.Log($"Created gameobject {go.name} - starting game");
+		if(_gameMode == GameMode.Host)
+        {
+			Debug.Log("GameMode.Host LobbyName>>" + ServerInfo.LobbyName);
+		}
+		else
+        {
+			Debug.Log("GameMode.Client LobbyName>>" + ClientInfo.LobbyName);
+        }
 		_runner.StartGame(new StartGameArgs
 		{
 			GameMode = _gameMode,
@@ -76,6 +85,8 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 			PlayerCount = ServerInfo.MaxUsers,
 			EnableClientSessionCreation = false
 		});
+
+		Debug.Log("GameLauncher Room JoinOrCreateLobby()");
 	}
 
 	private void SetConnectionStatus(ConnectionStatus status)
@@ -147,8 +158,11 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 		Debug.Log($"Player {player} Joined!");
 		if (runner.IsServer)
 		{
-			if(_gameMode==GameMode.Host)
+			Debug.Log("GameLauncher OnPlayerJoined IsServer>>");
+			if (_gameMode == GameMode.Host)
+			{
 				runner.Spawn(_gameManagerPrefab, Vector3.zero, Quaternion.identity);
+			}
 			var roomPlayer = runner.Spawn(_roomPlayerPrefab, Vector3.zero, Quaternion.identity, player);
 			roomPlayer.GameState = RoomPlayer.EGameState.Lobby;
 		}

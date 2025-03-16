@@ -41,6 +41,7 @@ public class KartCamera : KartComponent, ICameraController
 		{
 			rig.rotation = transform.rotation;
 			GameManager.GetCameraControl(this);
+			Debug.Log("KartCamera Render 카메라 주도권이 KartCamera로 넘어온시점");
 		}
 	}
 
@@ -51,7 +52,7 @@ public class KartCamera : KartComponent, ICameraController
 			Debug.LogWarning("Releasing camera from kart");
 			return false;
 		}
-
+		Debug.Log("KartCamera ControlCamera");
 		_viewpoint = GetViewpoint();
 
 		if (_shouldLerpCamera)
@@ -75,6 +76,8 @@ public class KartCamera : KartComponent, ICameraController
 			_viewpoint.localPosition,
 			Time.deltaTime * lerpFactorVP);
 
+		Debug.Log("ControlCameraDriving camNode position,localPosition" + camNode.position + "," + camNode.localPosition);
+
 		cam.transform.position = camNode.position;
 		cam.transform.rotation = Quaternion.LookRotation(camNode.forward, Vector3.up);
 		SetFOV(cam);
@@ -84,6 +87,8 @@ public class KartCamera : KartComponent, ICameraController
 	{
 		cam.transform.position = Vector3.Lerp(cam.transform.position, camNode.position, Time.deltaTime * 2f);
 		cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, camNode.rotation, Time.deltaTime * 2f);
+
+		Debug.Log("ControlCameraLerp camPos camNodePos" + cam.transform.position + ">>" + camNode.position);
 		if (Vector3.Distance(cam.transform.position, camNode.position) < 0.05f &&
 			Vector3.Dot(cam.transform.forward, camNode.forward) > 0.95f)
 		{

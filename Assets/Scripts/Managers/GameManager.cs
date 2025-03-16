@@ -32,6 +32,7 @@ public class GameManager : NetworkBehaviour
 
 	private static void OnLobbyDetailsChangedCallback(GameManager changed)
 	{
+		Debug.Log("GameManager OnLobbyDetailsChangedCallback>>");
 		OnLobbyDetailsUpdated?.Invoke(changed);
 	}
 	
@@ -56,6 +57,7 @@ public class GameManager : NetworkBehaviour
 
 		if (Object.HasStateAuthority)
 		{
+			Debug.Log("GameManager Spawned HasStateAuthority Networked LobbyName,TrackId,GameTypeId,MaxUsers");
 			LobbyName = ServerInfo.LobbyName;
 			TrackId = ServerInfo.TrackId;
 			GameTypeId = ServerInfo.GameMode;
@@ -91,7 +93,10 @@ public class GameManager : NetworkBehaviour
 		}
 
 		if (cameraController.ControlCamera(camera) == false)
+		{
+			Debug.Log("GameManager LateUpdate ControlCamera false>>");
 			cameraController = null;
+		}
 	}
 	
 	public static void GetCameraControl(ICameraController controller)

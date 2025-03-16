@@ -289,6 +289,8 @@ public class KartController : KartComponent
 			var tickDiff = Runner.Tick - AcceleratePressedTick;
 			var time = tickDiff * Runner.DeltaTime;
 
+			Debug.Log("KartController OnRaceStart times" + time);
+
 			if (time < 0.15f)
 				GiveBoost(false);
 			else if (time < 0.3f)
@@ -334,16 +336,20 @@ public class KartController : KartComponent
 		{
 			var steerLerp = Mathf.Abs(SteerAmount) < Mathf.Abs(steerTarget) ? steerAcceleration : steerDeceleration;
 			SteerAmount = Mathf.Lerp(SteerAmount, steerTarget, Runner.DeltaTime * steerLerp);
+			Debug.Log("KartController Steer SteerAmount != steerTarget>>" + SteerAmount + ">>" + steerTarget);
 		}
 
 		if (IsDrifting)
 		{
 			model.localEulerAngles = LerpAxis(Axis.Y, model.localEulerAngles, SteerAmount * 2,
 				driftRotationLerpFactor * Runner.DeltaTime);
+			Debug.Log("KartController Steer IsDrifting" + LerpAxis(Axis.Y, model.localEulerAngles, SteerAmount * 2,
+				driftRotationLerpFactor * Runner.DeltaTime));
 		}
 		else
 		{
 			model.localEulerAngles = LerpAxis(Axis.Y, model.localEulerAngles, 0, 6 * Runner.DeltaTime);
+			Debug.Log("KartController Steer Not IsDrifting" + LerpAxis(Axis.Y, model.localEulerAngles, 0, 6 * Runner.DeltaTime));
 		}
 
 		if (CanDrive)
@@ -354,7 +360,10 @@ public class KartController : KartComponent
 					Rigidbody.rotation.eulerAngles + Vector3.up * SteerAmount,
 					3 * Runner.DeltaTime)
 			);
-
+			Debug.Log("KartController Steer CanDrive" + Vector3.Lerp(
+					Rigidbody.rotation.eulerAngles,
+					Rigidbody.rotation.eulerAngles + Vector3.up * SteerAmount,
+					3 * Runner.DeltaTime));
 			Rigidbody.MoveRotation(rot);
 		}
 	}
@@ -365,13 +374,23 @@ public class KartController : KartComponent
 		                  Mathf.Sign(RealSpeed);
 
 		if (IsHopping && RealSpeed < speedToDrift)
+		{
+			Debug.Log("GetSteerTarget IsHopping && RealSpeed < speedToDrift" + input.Steer * hopSteerStrength);
 			return input.Steer * hopSteerStrength;
+		}
 
 		if (IsDriftingLeft)
+		{
+			Debug.Log("KartController GetSteerTarget IsDriftingLeft GetSteerTarget IsDriftingLeft" + Remap(input.Steer, -1, 1, -driftInputRemap.y, -driftInputRemap.x) * maxSteerStrength);
 			return Remap(input.Steer, -1, 1, -driftInputRemap.y, -driftInputRemap.x) * maxSteerStrength;
+		}
 		if (IsDriftingRight)
+		{
+			Debug.Log("KartController GetSteerTarget IsDriftingRight GetSteerTarget IsDriftingRight" + Remap(input.Steer, -1, 1, driftInputRemap.x, driftInputRemap.y) * maxSteerStrength);
 			return Remap(input.Steer, -1, 1, driftInputRemap.x, driftInputRemap.y) * maxSteerStrength;
+		}
 
+		Debug.Log("KartController GetSteerTarget" + input.Steer * steerFactor);
 		return input.Steer * steerFactor;
 	}
 
@@ -383,6 +402,7 @@ public class KartController : KartComponent
 			StartDrifting(input);
 			DriftStartTick = Runner.Tick;
 			HopTimer = TickTimer.CreateFromSeconds(Runner, 0.367f);
+			Debug.Log("KartController StartDrifting");
 		}
 
 		if (IsDrifting)
@@ -390,11 +410,14 @@ public class KartController : KartComponent
 			if (!input.IsDriftPressed || RealSpeed < speedToDrift)
 			{
 				StopDrifting();
+				Debug.Log("KartController StopDrifting");
 			}
 			else if (IsGrounded)
 			{
+				Debug.Log("KartController IsGrounded Drifting DriftTime>>" + Runner.Tick +"-"+DriftStartTick+"*"+Runner.DeltaTime+"->"+DriftTime);
 				EvaluateDrift(DriftTime, out var index);
 				if (DriftTierIndex != index) DriftTierIndex = index;
+				Debug.Log("KartController IsDrifting drifttierindex" + DriftTierIndex);
 			}
 		}
 	}
@@ -551,17 +574,24 @@ public class KartController : KartComponent
 		{
 			if (driftDuration < tier.startTime)
 			{
+				Debug.Log(i+"| KartController EvaluateDrift driftDuration < tier.startTime" + driftDuration + "<" + tier.startTime);
 				tier = driftTiers[--i];
+				Debug.Log("KartController EvaluateDrift update --index tiers"+i);
 				break;
 			}
 
 			if (i < driftTiers.Length - 1)
+			{
+				Debug.Log("KartController EvaluateDrift driftDuration >= tier.startTime");
 				tier = driftTiers[++i];
+				Debug.Log("KartController EvaluateDrift update ++index tiers" + i);
+			}
 			else
 				break;
 		}
 
 		index = i;
+		Debug.Log("EvaluateDrift index>>" + index);
 		return tier;
 	}
 
