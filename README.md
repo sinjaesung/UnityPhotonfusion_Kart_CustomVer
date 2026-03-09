@@ -24,6 +24,7 @@ UnityPhotonfusion_카트게임
 <img src="GameScreenShot1.PNG" width="900"/>
 <img src="GameScreenShot2.PNG" width="900"/>
 <img src="GameScreenShot3.PNG" width="900"/>
+<img src="GameScreenShot4.PNG" width="900"/>
 
 ## Gameplay Video
 https://www.youtube.com/watch?v=sSJ0G43EvP4&list=PLnPlc_DvhwlTIvDDBttrIJ_uuTx07CLrz&index=3
